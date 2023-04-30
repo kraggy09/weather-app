@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 body {
-  background-image: url("./src/asset/bg.jpg.jpg");
+  background: url("./src/asset/bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-position: center center;
+  width: 100vw;
+  height: 93.2vh;
 }

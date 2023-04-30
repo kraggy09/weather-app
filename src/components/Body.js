@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
+import Error from "./Error";
 
 const Body = ({ search, buttonClick }) => {
   const [weather, setWeather] = useState(null);
   const [sym, setSym] = useState(null);
   const apiKey = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=a38f758c5edcf066e4c15e4bd4284d5c`;
 
-  const icon = `https://openweathermap.org/img/wn/${sym}@2x.png
-  `;
+  const icon = `https://openweathermap.org/img/wn/${sym}@2x.png`;
 
   const [initialRender, setInitialRender] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (weather != null) {
       if (weather.coord != null) {
@@ -18,10 +21,11 @@ const Body = ({ search, buttonClick }) => {
   }, [weather]);
 
   async function getApi() {
+    setLoading(true);
     let data = await fetch(apiKey);
     const json = await data.json();
     console.log(json);
-
+    setLoading(false);
     setWeather(json);
   }
 
@@ -35,26 +39,36 @@ const Body = ({ search, buttonClick }) => {
 
   return (
     <div>
-      {weather == null ? (
-        <span>Please Search</span>
+      {loading ? (
+        <Shimmer />
       ) : (
         <div>
-          {weather.name == null ? (
-            <div className="w-[80%] border p-5 rounded-2xl text-xl font-bold text-red-500 border-black text-center mt-10">
-              City not found
-            </div>
+          {weather == null ? (
+            <span className="flex justify-center items-center h-[60vh] w-full">
+              <h1 className="font-bold  md:text-2xl">
+                Enter Any City Name to Get Real Time data
+              </h1>
+            </span>
+          ) : weather.name == null ? (
+            <Error />
           ) : (
-            <div>
-              <div className="w-full h-[60vh] flex flex-col ">
-                <p className="font-bold text-2xl">{weather.name}</p>
-                <p className="text-5xl sm:text-6xl lg:text-9xl  text-center">
-                  {weather.main.temp} °C
+            <div className="flex flex-col">
+              <div className="w-full h-[60vh] pt-9 flex flex-col ">
+                <p className="font-bold text-2xl text-center">{weather.name}</p>
+                <p className="text-5xl mt-5 sm:text-6xl lg:text-8xl  text-center">
+                  {Math.round(weather.main.temp * 10) / 10} °C
+                </p>
+                <p className="text-center mt-5 sm:text-xl lg:text-2xl">
+                  Feel: {Math.round(weather.main.feels_like * 10) / 10} °C
+                </p>
+                <p className="text-center mt-5 sm:text-xl lg:text-2xl">
+                  {weather.weather[0].main}
                 </p>
               </div>
-              <div class="w-full  bg-white bg-opacity-50 backdrop-blur rounded drop-shadow-lg flex justify-around items-center">
+              <div className="w-full  bg-white bg-opacity-50 backdrop-blur rounded drop-shadow-lg flex justify-around items-center">
                 <img
                   src={icon}
-                  className="h-[100px] w-[100px] bg-gray-400 rounded-3xl"
+                  className="h-[100px] m-5 w-[100px] bg-gray-400 rounded-full"
                 />
                 <div className=" ">
                   <p className="border-b text-center">
@@ -64,7 +78,7 @@ const Body = ({ search, buttonClick }) => {
                 </div>
                 <div className=" ">
                   <p className="border-b">{weather.wind.speed} KM/H</p>
-                  <p>Humidity</p>
+                  <p>Wind Speed</p>
                 </div>
               </div>
             </div>

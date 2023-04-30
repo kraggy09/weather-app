@@ -11,7 +11,12 @@ const Search = ({ search, setSearch, setButtonClick, buttonClick }) => {
           console.log(search);
         }}
       />
-      <button onClick={() => setButtonClick(!buttonClick)}>Search</button>
+      <button
+        className="border border-white rounded-xl px-2 py-1 hover:bg-white hover:text-black  hover:transition-all mx-2 text-white"
+        onClick={() => setButtonClick(!buttonClick)}
+      >
+        Search
+      </button>
     </div>
   );
 };

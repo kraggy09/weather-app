@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import Search from "./components/Search";
+import Footer from "./components/Footer";
 import Body from "./components/Body";
 const App = () => {
   const [searchText, setSearchText] = useState("");
@@ -14,6 +15,7 @@ const App = () => {
         buttonClick={buttonClicked}
       />
       <Body search={searchText} buttonClick={buttonClicked} />
+      <Footer />
     </>
   );
 };
