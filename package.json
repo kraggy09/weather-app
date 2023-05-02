@@ -3,13 +3,11 @@
   "name": "weather-app",
   "version": "1.0.0",
   "description": "This is Weather App powered by Reacr",
-  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "jest",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "author": "Kaif Shaikh",
   "license": "ISC",
