@@ -1,14 +1,18 @@
 {
+  "homepage": "https://github.com/kraggy09/weather-app/",
   "name": "weather-app",
   "version": "1.0.0",
   "description": "This is Weather App powered by Reacr",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "Kaif Shaikh",
   "license": "ISC",
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "parcel": "^2.8.3",
     "postcss": "^8.4.23",
     "process": "^0.11.10",
